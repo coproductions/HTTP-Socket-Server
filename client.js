@@ -47,7 +47,14 @@ function connectedToServer(){
   console.log('client connected')
   client.on('data',responseHandler)
   var requestHeader = generateHeader(requestURI,requestHost,method)
-  client.write(requestHeader);
+  if (method == 'PUT'){
+    if(process.argv[5]){
+      var requestBody = generateBody(process.argv[5]);
+      client.write(requestHeader+requestBody);
+    }
+  } else{
+    client.write(requestHeader);
+  }
 }
 
 function generateHeader(uri,host,method){
@@ -67,4 +74,10 @@ function responseHandler(chunk){
   responseCache[timeReceived] = responseHeader;
   console.log('cache',responseCache)
 
+}
+
+function generateBody(input){
+  var body = '\n\n';
+  body+=input;
+  return body;
 }
