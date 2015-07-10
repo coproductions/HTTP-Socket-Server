@@ -116,7 +116,7 @@ function socketConnected(socket){
 
 
     //attach body
-    if (statuscode !== 304){
+    if (statuscode !== 304 && method !== 'HEAD'){
       responseString += bodyString;
     }
 

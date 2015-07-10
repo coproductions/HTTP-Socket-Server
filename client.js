@@ -52,7 +52,7 @@ function connectedToServer(){
 
 function generateHeader(uri,host,method){
   var requestString = '';
-  requestString += method+''+uri+' HTTP/1.1'+'\n';
+  requestString += method+' '+uri+' HTTP/1.1'+'\n';
   requestString += 'Date: '+new Date().toUTCString()+ '/n';
   requestString += 'Host: '+host + '/n';
   requestString += 'Const Http';
