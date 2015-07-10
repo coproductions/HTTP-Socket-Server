@@ -2,8 +2,9 @@ var net = require('net');
 var PORT = 8080;
 var ADDRESS = '0.0.0.0';
 var method = 'GET';
-
+var filename = '';
 var responseCache = {};
+var fs = require('fs');
 
 process.stdin.setEncoding('utf8');
 var requestArgument = process.argv[process.argv.length - 1];
@@ -24,6 +25,8 @@ if(process.argv.length > 3){
     case '-port' :
       PORT = Number(process.argv[3]);
       break;
+    case '-save' :
+       filename = process.argv[3];
   }
 
     var client = net.connect({port: PORT}, connectedToServer);
@@ -41,6 +44,17 @@ else{
   process.stdout.write('The following commands are available to you:\n-method: allows you to determine the method. Follow it with a method.\n-head: requests only the head.\n-port: needs to be followed by a port to determine the port.')
   //include held menu here
 }
+
+client.on('error',function(err){
+  console.log('hello I received an error',err)
+  switch(err.code){
+    case 'ECONNREFUSED' :
+      console.log('Error: Could not connect to server, try a different port');
+      break;
+    default:
+      console.log('Error: an unknown error has occurred')
+  }
+})
 
 
 function connectedToServer(){
@@ -70,9 +84,14 @@ function generateHeader(uri,host,method){
 function responseHandler(chunk){
   process.stdout.write(chunk);
   var responseHeader = chunk.split('\n\n')[0];
+  var responseBody = chunk.split('\n\n')[1];
   var timeReceived = new Date().toUTCString();;
   responseCache[timeReceived] = responseHeader;
   console.log('cache',responseCache)
+  if(filename){
+    fs.writeFile(filename,responseBody);
+    filename = '';
+  }
 
 }
 
