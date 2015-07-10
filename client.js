@@ -47,7 +47,7 @@ function connectedToServer(){
   console.log('client connected')
   client.on('data',responseHandler)
   var requestHeader = generateHeader(requestURI,requestHost,method)
-  if (method == 'PUT'){
+  if (method == 'POST'){
     if(process.argv[5]){
       var requestBody = generateBody(process.argv[5]);
       client.write(requestHeader+requestBody);
