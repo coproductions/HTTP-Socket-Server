@@ -20,7 +20,7 @@ if(requestArgument){
 
 } else{
   process.stdout.write('hello')
-
+  //include held menu here
 }
 
 
@@ -43,7 +43,7 @@ function generateHeader(uri,host){
 function responseHandler(chunk){
   process.stdout.write(chunk);
   var responseHeader = chunk.split('\n\n')[0];
-  var timeReceived = toString(Date.now());
+  var timeReceived = new Date().toUTCString();;
   responseCache[timeReceived] = responseHeader;
   console.log('cache',responseCache)
 
