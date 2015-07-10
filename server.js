@@ -93,15 +93,16 @@ function socketConnected(socket){
         break;
       default :
         statuscode = 404;
+        bodyString += '\n\n'+ resources.fourofour;
+        contentLength = resources.fourofour.length;
         break;
     }
 
     //check for If-modified-request
-    // if(checkForIfModifiedRequest(chunk)){
       console.log('what is chunk',typeof chunk)
       var ifModifiedRequestDate = checkForIfModifiedRequest(chunk);
       if(ifModifiedRequestDate){
-        //see if time is different and thus chang status code
+        //see if time is different and thus change status code
         if(timeServerStarted < ifModifiedRequestDate){
           statuscode = 304;
         }
@@ -115,7 +116,7 @@ function socketConnected(socket){
 
 
     //attach body
-    if (method === 'GET' && statuscode === 200){
+    if (statuscode !== 304){
       responseString += bodyString;
     }
 

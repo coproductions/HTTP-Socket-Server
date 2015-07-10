@@ -1,7 +1,7 @@
 module.exports = (function(){
 
   var ok200 = 'HTTP/1.1 200 OK';
-  var notFound404 = 'HTTP/1.0 404 Not Found';
+  var notFound404 = 'HTTP/1.1 404 Not Found';
   var notModified304 = 'HTTP/1.1 304 Not Modified';
   var type = 'Content-Type: text/html; charset=utf-8';
 
