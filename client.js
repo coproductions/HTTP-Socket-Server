@@ -42,7 +42,6 @@ function generateHeader(uri,host){
 
 function responseHandler(chunk){
   process.stdout.write(chunk);
-  console.log('chunk:',chunk)
   var responseHeader = chunk.split('\n\n')[0];
   var timeReceived = toString(Date.now());
   responseCache[timeReceived] = responseHeader;
